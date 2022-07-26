@@ -1,92 +1,120 @@
-WalletLink
-==========
+# Coinbase Wallet SDK
 
-WalletLink is an open protocol that lets users connect their mobile wallets to
-your DApp.
+Coinbase Wallet SDK (formerly WalletLink) lets developers connect their dapps to Coinbase Wallet
+on both mobile web (for iOS and Android) and desktop:
 
-With WalletLink, users can use your DApp in any desktop browser without
-installing an extension, and end-to-end encryption using client-side generated
-keys keeps all user activity private.
+- **Mobile**: Users can connect to your mobile web dapp through a deeplink to the dapp browser in [Coinbase Wallet Mobile App](https://coinbase-wallet.onelink.me/q5Sx/fdb9b250).
 
-For DApp developers to integrate with WalletLink, all you need to do is drop a
-few lines of code into your application, and WalletLink will take care of the
-rest. WalletLink is open-source and uses minimal dependencies for maximum
-security and no code bloat.
+- **Desktop**: Users can connect to your desktop app with a QR code in the [Coinbase Wallet Mobile App](https://coinbase-wallet.onelink.me/q5Sx/fdb9b250) or with the [Coinbase Wallet Chrome Extension](https://coinbase-wallet.onelink.me/q5Sx/fdb9b250).
 
-## Getting Started
+Wallet SDK is open-source and uses minimal dependencies for maximum security and no code bloat. Simply drop a few lines of code into your dapp and Wallet SDK takes care of the rest.
 
-### Installation
+## Getting started
+
+- This readme contains brief instructions to get up and running.
+- Visit our [public developer docs](https://docs.cloud.coinbase.com/wallet-sdk/docs) for more detail, including samples for integrating Coinbase Wallet using libraries like [web3-react](https://github.com/NoahZinsmeister/web3-react), [web3modal](https://github.com/Web3Modal/web3modal), [Web3-Onboard](https://docs.blocknative.com/onboard), and [wagmi](https://wagmi.sh/).
+
+## Installing and Upgrading
+
+> The installation package for **Coinbase Wallet SDK** (formerly WalletLink) is now named `@coinbase/wallet-sdk`.
+
+### Installing Wallet SDK
+
+Install Coinbase Wallet SDK with yarn or npm.
+
+#### Yarn
+
+1. Check available versions of Wallet SDK.
 
 ```shell
-# With Yarn
-yarn add walletlink
-
-# With NPM
-npm install walletlink
+yarn info @coinbase/wallet-sdk versions
 ```
 
-The following instructions are in [TypeScript](https://www.typescriptlang.org/),
-but the usage is the same in JavaScript, except for the occasional type
-annotations, for example `: string[]` or `as any`.
+2. Install a specific version or the latest version.
 
-### Initializing WalletLink and a WalletLink-powered Web3 object
-
-```typescript
-// TypeScript
-import WalletLink from "walletlink"
-import Web3 from "web3"
-
-const APP_NAME = "My Awesome App"
-const APP_LOGO_URL = "https://example.com/logo.png"
-const ETH_JSONRPC_URL = "https://mainnet.infura.io/v3/<YOUR_INFURA_API_KEY>"
-const CHAIN_ID = 1
-
-// Initialize WalletLink
-export const WalletLink = new WalletLink({
-  appName: APP_NAME,
-  appLogoUrl: APP_LOGO_URL
-})
-
-// Initialize a Web3 Provider object
-export const ethereum = walletLink.makeWeb3Provider(ETH_JSONRPC_URL, CHAIN_ID)
-
-// Initialize a Web3 object
-export const web3 = new Web3(ethereum as any)
-
-// Optionally, have the default account be set automatically when available
-ethereum.on("accountsChanged", (accounts: string[]) => {
-  web3.eth.defaultAccount = accounts[0]
-})
-web3.eth.defaultAccount = web3.eth.accounts[0]
+```shell
+#yarn add @coinbase/wallet-sdk@3.0.0
+yarn add @coinbase/wallet-sdk
 ```
 
-### Use EIP-1102 to obtain authorization and get Ethereum accounts
+3. Check your installed version.
 
-Invoking EIP-1102 will show a QR code dialog if the user's mobile wallet is not
-already connected to their browser. The following code should run in response to
-a user-initiated action such as clicking a button to ensure the pop up is not
-blocked by the browser.
-
-```typescript
-// Use eth_RequestAccounts
-ethereum.send("eth_requestAccounts").then((accounts: string[]) => {
-  console.log(`User's address is ${accounts[0]}`)
-
-})
-
-// Alternatively, you can use ethereum.enable()
-ethereum.enable().then((accounts: string[]) => {
-  console.log(`User's address is ${accounts[0]}`)
-})
+```shell
+yarn list @coinbase/wallet-sdk
 ```
 
-That's it! Once the authorization is obtained from the user, the Web3 object
-(`web3`) and the Web3 Provider (`ethereum`) are ready to be used as per usual.
+#### Npm
 
-- - -
+1. Check available versions of Wallet SDK.
+
+```shell
+npm view @coinbase/wallet-sdk versions
 ```
-Copyright © 2018-2019 WalletLink.org <https://www.walletlink.org/>
-Copyright © 2018-2019 Coinbase, Inc. <https://www.coinbase.com/>
+
+2. Install a specific version or the latest version.
+
+```shell
+#npm install @coinbase/wallet-sdk@3.0.0
+npm install @coinbase/wallet-sdk
+```
+
+3. Check your installed version.
+
+```shell
+npm list @coinbase/wallet-sdk
+```
+
+### Upgrading Wallet SDK
+
+Upgrade Coinbase Wallet SDK with yarn or npm.
+
+#### Yarn
+
+1. Compare your installed version of Coinbase Wallet SDK with the latest available version.
+
+```shell
+yarn outdated @coinbase/wallet-sdk
+```
+
+2. Update Coinbase Wallet SDK to the latest.
+
+```shell
+yarn upgrade @coinbase/wallet-sdk --latest
+```
+
+#### Npm
+
+1. Compare your installed version of Coinbase Wallet SDK with the latest available version.
+
+```shell
+npm outdated @coinbase/wallet-sdk
+```
+
+2. If necessary, update `package.json` with the latest major version.
+
+```shell
+{
+  "dependencies": {
+    "@coinbase/wallet-sdk": "^3.0.0"
+  }
+}
+```
+
+3. Update Coinbase Wallet SDK to the latest available version.
+
+```shell
+npm update @coinbase/wallet-sdk
+```
+
+## Libraries using Coinbase Wallet SDK
+
+- [blocknative/onboard](https://github.com/blocknative/onboard)
+- [wagmi](https://github.com/tmm/wagmi)
+- [web3-react](https://github.com/NoahZinsmeister/web3-react)
+- [web3modal](https://github.com/Web3Modal/web3modal)
+
+```
+Copyright © 2018-2022 Coinbase, Inc. <https://www.coinbase.com/>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -100,3 +128,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+## Attributions
+
+- [Eth-json-rpc-filters](https://github.com/MetaMask/eth-json-rpc-filters/blob/main/LICENSE) under the ISC license
+- [Safe-event-emitter](https://github.com/MetaMask/safe-event-emitter/blob/master/LICENSE) under the ISC license
+- [Json-rpc-engine](https://github.com/MetaMask/json-rpc-engine/blob/main/LICENSE) under the ISC license
+- [Eth-rpc-errors](https://github.com/MetaMask/eth-rpc-errors/blob/main/LICENSE) under the MIT license
+- [Eth-block-tracker](https://github.com/MetaMask/eth-block-tracker/blob/master/LICENSE) under the MIT license
